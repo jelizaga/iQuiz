@@ -31,7 +31,7 @@ class ViewController: UIViewController, UIAlertViewDelegate, UITableViewDataSour
     let topicDescriptions = ["A quiz about Marvel comics.", "A quiz about mathematics.", "A quiz about science."]
     
     // Array of topic images.
-    let topicImgs = [UIImage (named: "Marvel"), UIImage(named: "Math"), UIImage(named: "Science")]
+    let topicImgs = [UIImage (named: "marvel"), UIImage(named: "math"), UIImage(named: "science")]
     
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // Settings Alert /////////////////////////////////////////////////////////////////////////////
@@ -84,6 +84,7 @@ class ViewController: UIViewController, UIAlertViewDelegate, UITableViewDataSour
         let row = indexPath.row
         cell.lblTitle.text = topicTitles[row]
         cell.lblDescription.text = topicDescriptions[row]
+        cell.imgviewImage.image = topicImgs[row]
         return cell
     }
     
