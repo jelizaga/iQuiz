@@ -26,7 +26,11 @@ class ViewController: UIViewController, UIAlertViewDelegate, UITableViewDataSour
     
     // Array of topic titles.
     let topicTitles = ["Marvel", "Math", "Science"]
+    
+    // Array of topic descriptions.
     let topicDescriptions = ["A quiz about Marvel comics.", "A quiz about mathematics.", "A quiz about science."]
+    
+    // Array of topic images.
     let topicImgs = [UIImage (named: "Marvel"), UIImage(named: "Math"), UIImage(named: "Science")]
     
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,6 +39,7 @@ class ViewController: UIViewController, UIAlertViewDelegate, UITableViewDataSour
     
     // Alert displayed when the Settings button is pressed.
     @IBAction func showAlert(sender: AnyObject) {
+        print("User has pressed the settings button.")
         let alert: UIAlertController = UIAlertController(title: "YOLO", message: "#SWAG", preferredStyle: .Alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         alert.addAction(cancelAction)
@@ -87,7 +92,7 @@ class ViewController: UIViewController, UIAlertViewDelegate, UITableViewDataSour
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let row = indexPath.row
-        print("User has selected \(topicTitles[row]).")
+        print("User has selected quiz topic: \(topicTitles[row]).")
     }
 
 
