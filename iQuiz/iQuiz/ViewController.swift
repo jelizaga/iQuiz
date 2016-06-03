@@ -8,16 +8,30 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIAlertViewDelegate, UITableViewDelegate  {
+class ViewController: UIViewController, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate  {
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // IBOutlets //////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     // Settings button.
     @IBOutlet weak var bttnSettings: UIToolbar!
+    
     // UITableView of topics.
     @IBOutlet weak var tblviewTopics: UITableView!
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Globals ////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    
     // Array of topic titles.
     let topicTitles = ["Marvel", "Math", "Science"]
     let topicDescriptions = ["A quiz about Marvel comics.", "A quiz about mathematics.", "A quiz about science."]
     let topicImgs = [UIImage (named: "Marvel"), UIImage(named: "Math"), UIImage(named: "Science")]
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Settings Alert /////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     
     // Alert displayed when the Settings button is pressed.
     @IBAction func showAlert(sender: AnyObject) {
@@ -27,28 +41,53 @@ class ViewController: UIViewController, UIAlertViewDelegate, UITableViewDelegate
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // viewDidLoad ////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        tblviewTopics.delegate = self
+        tblviewTopics.dataSource = self
     }
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // didReceiveMemoryWarning ////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    //
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // tblviewTopics //////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    
+    // The table has 1 section.
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    // The table has as many rows per section as there are in topics in topicTitles.
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return topicTitles.count
     }
     
-    //
+    // Creates and configures cells to populate the topic tblviewTopics table view.
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tblviewTopics.dequeueReusableCellWithIdentifier("QuizCell", forIndexPath: indexPath) as! TopicCellTableViewCell
-        cell.imgTopic.image = topicImgs[indexPath.row]
-        cell.lblTopicTitle.text = topicTitles[indexPath.row]
-        cell.lblTopicDef.text = topicDescriptions[indexPath.row]
+        let cell = self.tblviewTopics.dequeueReusableCellWithIdentifier("TopicCell", forIndexPath: indexPath) as! TopicCellTableViewCell
+        let row = indexPath.row
+        cell.lblTitle.text = topicTitles[row]
+        cell.lblDescription.text = topicDescriptions[row]
         return cell
+    }
+    
+    // Action to take when the user selects a single row.
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let row = indexPath.row
+        print("User has selected \(topicTitles[row]).")
     }
 
 
